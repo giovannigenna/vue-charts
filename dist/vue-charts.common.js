@@ -1,6 +1,6 @@
 /*!
  * vue-charts v0.2.1
- * (c) 2016 Hayden Bickerton
+ * (c) 2018 Hayden Bickerton
  * Released under the MIT License.
  */
 'use strict';
@@ -158,6 +158,12 @@ var props = {
       return [];
     }
   },
+  formatters: {
+    type: Array,
+    default: function _default() {
+      return [];
+    }
+  },
   options: {
     type: Object,
     default: function _default() {
@@ -252,6 +258,12 @@ var Chart = {
       if (!_.isEmpty(self.rows)) {
         dataTable.addRows(self.rows);
       }
+
+      _.forEach(self.formatters, function (formatter, key) {
+        if (formatter && formatter.type && formatter.params) {
+          new window.google.visualization[formatter.type](formatter.params).format(dataTable, parseInt(key));
+        }
+      });
 
       return dataTable;
     },
