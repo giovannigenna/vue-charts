@@ -113,6 +113,13 @@ export default {
       this.drawChart()
     }
   },
+  watch: {
+    chart: function (val, oldVal) {
+      if(oldVal === null) {
+        eventsBinder(this, this.chart, this.chartEvents)
+      }
+    }
+  },
   mounted () {
     let self = this
     loadCharts(self.packages, self.version, self.mapsApiKey, self.language)

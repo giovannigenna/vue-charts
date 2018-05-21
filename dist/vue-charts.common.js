@@ -207,7 +207,7 @@ var Chart = {
       /*
           We put the uid in the DOM element so the component can be used multiple
           times in the same view. Otherwise Google Charts will only make one chart.
-           The X is prepended because there must be at least
+            The X is prepended because there must be at least
           1 character in id - https://www.w3.org/TR/html5/dom.html#the-id-attribute
       */
       chartId: 'X' + this._uid,
@@ -220,6 +220,13 @@ var Chart = {
   events: {
     redrawChart: function redrawChart() {
       this.drawChart();
+    }
+  },
+  watch: {
+    chart: function chart(val, oldVal) {
+      if (oldVal === null) {
+        eventsBinder(this, this.chart, this.chartEvents);
+      }
     }
   },
   mounted: function mounted() {
